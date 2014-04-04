@@ -1,0 +1,12 @@
+{application, zabbix_sender,
+ [
+  {description, "Simple native zabbix sender for erlang apps"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { zabbix_sender_app, []}},
+  {env, []}
+ ]}.

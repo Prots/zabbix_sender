@@ -1,0 +1,4 @@
+{"VM-PP-TIMING", "echo", 123}.
+{"VM-PP-TIMING", "ping", "234"}.
+{"VM-PP-TIMING1", "ping", "234"}.
+
