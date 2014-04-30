@@ -5,8 +5,8 @@
 -export([send_item/1, send_item/2, send_list_items/1, send_list_items/2,
     send_from_file/1, send_from_file/0]).
 
--type item() :: {binary()|string(), binary()|string()|integer()}.
--type advanced_item() :: {binary()|string(), binary()|string(), binary()|string()|integer()}.
+-type item() :: {binary()|string(), binary()|string()|integer()|float()}.
+-type advanced_item() :: {binary()|string(), binary()|string(), binary()|string()|integer()|float()}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% API FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -90,12 +90,17 @@ prepare_data({Key, Value}) when is_list(Key), is_integer(Value) ->
     {list_to_binary(Key), integer_to_binary(Value)};
 prepare_data({Key, Value}) when is_binary(Key), is_integer(Value) ->
     {Key, integer_to_binary(Value)};
+prepare_data({Key, Value}) when is_binary(Key), is_float(Value) ->
+    {Key, float_to_binary(Value)};
 prepare_data({FromHost, Key, Value}) when is_binary(FromHost), is_binary(Key), is_binary(Value) ->
     {FromHost, Key, Value};
 prepare_data({FromHost, Key, Value}) when is_list(FromHost), is_list(Key), is_list(Value) ->
     {list_to_binary(FromHost), list_to_binary(Key), list_to_binary(Value)};
 prepare_data({FromHost, Key, Value}) when is_list(FromHost), is_list(Key), is_integer(Value) ->
-    {list_to_binary(FromHost), list_to_binary(Key), integer_to_binary(Value)}.
+    {list_to_binary(FromHost), list_to_binary(Key), integer_to_binary(Value)};
+prepare_data({FromHost, Key, Value}) when is_list(FromHost), is_list(Key), is_float(Value) ->
+    {list_to_binary(FromHost), list_to_binary(Key), float_to_binary(Value)}.
+    
 
 -spec convert_data(item()) -> {ok, binary()}.
 convert_data({Key, Value}) ->
